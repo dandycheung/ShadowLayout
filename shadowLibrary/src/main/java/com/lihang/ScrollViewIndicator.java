@@ -1,5 +1,6 @@
 package com.lihang;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -14,6 +15,8 @@ import android.view.ViewTreeObserver;
 import android.widget.ScrollView;
 
 import androidx.annotation.ColorInt;
+import androidx.annotation.FloatRange;
+import androidx.annotation.IntRange;
 import androidx.annotation.RequiresApi;
 
 import com.lihang.utils.AnimalUtil;
@@ -148,7 +151,6 @@ public class ScrollViewIndicator extends View {
         invalidate();
     }
 
-
     private void setProgress(float progress) {
         mStartTop = progress * (mMaxProgress - mProgress) * mViewHeight / mMaxProgress;
         postInvalidate();
@@ -196,5 +198,13 @@ public class ScrollViewIndicator extends View {
                 AnimalUtil.alphaHide(ScrollViewIndicator.this, mDuration, 1.0f, 0.0f, mDelayDuration);
             }
         }
+    }
+
+
+    @SuppressLint("SupportAnnotationUsage")
+    @FloatRange(from=0.0,to=1.0)
+    public void setProcessPrecent(float precent){
+        mProgress = precent * mMaxProgress;
+        postInvalidate();
     }
 }

@@ -1,5 +1,6 @@
 package com.lihang;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -12,8 +13,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.HorizontalScrollView;
+import android.widget.Toast;
 
 import androidx.annotation.ColorInt;
+import androidx.annotation.FloatRange;
 
 import com.lihang.utils.AnimalUtil;
 
@@ -92,7 +95,7 @@ public class HorizontalScrollViewIndicator extends View {
 
                     if (mBindScrollView.getMeasuredWidth() < mBindScrollView.getChildAt(0).getMeasuredWidth()) {
                         HorizontalScrollViewIndicator.this.setVisibility(View.VISIBLE);
-                        if (!mAlwaysShow){
+                        if (!mAlwaysShow) {
                             AnimalUtil.cancleAnimate(HorizontalScrollViewIndicator.this);
                             AnimalUtil.alphaHide(HorizontalScrollViewIndicator.this, mDuration, 1.0f, 0.0f, mDelayDuration);
                         }
@@ -188,11 +191,19 @@ public class HorizontalScrollViewIndicator extends View {
             View firstView = mScrollView.getChildAt(0);
             HorizontalScrollViewIndicator.this.setProgress((((float) mScrollView.getScrollX()) / (firstView.getMeasuredWidth() - mScrollView.getWidth())));
 
-            if (!mAlwaysShow){
+            if (!mAlwaysShow) {
                 AnimalUtil.cancleAnimate(HorizontalScrollViewIndicator.this);
                 AnimalUtil.alphaHide(HorizontalScrollViewIndicator.this, mDuration, 1.0f, 0.0f, mDelayDuration);
             }
 
         }
+    }
+
+
+    @SuppressLint("SupportAnnotationUsage")
+    @FloatRange(from = 0.0, to = 1.0)
+    public void setProcessPrecent(float precent) {
+        mProgress = precent * mMaxProgress;
+        postInvalidate();
     }
 }
